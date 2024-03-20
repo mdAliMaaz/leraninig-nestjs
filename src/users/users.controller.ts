@@ -16,6 +16,7 @@ import { Serilize } from 'src/interceptor/SerializeInterceptor';
 import { UserDto } from './dto/user.dto';
 import { AuthService } from './auth.service';
 import { CurrentUser } from 'src/decoratores/current-user.decorator';
+import { User } from './users.entity';
 
 @Controller('auth')
 @Serilize(UserDto)
@@ -45,7 +46,7 @@ export class UsersController {
   // }
 
   @Get('/whoami')
-  whoAmi(@CurrentUser() user: any) {
+  whoAmi(@CurrentUser() user: User) {
     return user;
   }
 
