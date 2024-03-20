@@ -1,8 +1,8 @@
-POST http://localhost:3000/auth/signup
+POST http://localhost:3000/auth/signin
 content-type: application/json
 
 {
-  "email":"maaz@gmail.com",
+  "email":"maazi@gmail.com",
   "password":"123456789"
 }
 ### get all users
@@ -23,5 +23,5 @@ Content-Type: application/json
 }
 
 ### delete user
-DELETE http://localhost:3000/auth/1
+DELETE http://localhost:3000/auth/5
 Content-Type: application/json

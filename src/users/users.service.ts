@@ -12,8 +12,12 @@ export class UsersService {
     return this.repo.save(user);
   }
 
-  find() {
+  findAll() {
     return this.repo.find();
+  }
+
+  find(email: string) {
+    return this.repo.findOneBy({ email });
   }
 
   async findOne(id: number) {
