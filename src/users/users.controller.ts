@@ -3,9 +3,11 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
+  Session,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
@@ -23,13 +25,28 @@ export class UsersController {
   ) {}
 
   @Post('/signup')
-  createUser(@Body() body: CreateUserDto) {
-    return this.authService.singup(body.email, body.password);
+  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.singup(body.email, body.password);
+    session.id = user.id;
+    return user;
   }
 
   @Post('/signin')
-  signInUser(@Body() body: CreateUserDto) {
-    return this.authService.signin(body.email, body.password);
+  async signInUser(@Body() body: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.signin(body.email, body.password);
+    session.id = user.id;
+    return user;
+  }
+
+  @Get('whoami')
+  whoAmI(@Session() session: any) {
+    return this.usersService.findOne(session.id);
+  }
+
+  @Post('signout')
+  @HttpCode(204)
+  signOut(@Session() session: any) {
+    return (session.id = null);
   }
 
   @Get()
