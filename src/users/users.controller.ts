@@ -28,14 +28,14 @@ export class UsersController {
     private authService: AuthService,
   ) {}
 
-  @Post('/signup')
+  @Post('signup')
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signup(body.email, body.password);
     session.id = user.id;
     return user;
   }
 
-  @Post('/signin')
+  @Post('signin')
   async signInUser(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signin(body.email, body.password);
     session.id = user.id;
@@ -48,7 +48,7 @@ export class UsersController {
   // }
 
   @UseGuards(AUthGuard)
-  @Get('/whoami')
+  @Get('whoami')
   whoAmi(@CurrentUser() user: User) {
     return user;
   }
@@ -64,17 +64,17 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get('/:id')
+  @Get(':id')
   findUserById(@Param() parmas: { id: string }) {
     return this.usersService.findOne(parseInt(parmas.id));
   }
 
-  @Patch('/:id')
+  @Patch(':id')
   updateUser(@Param() parmas: { id: string }, @Body() body: UpdateUserDto) {
     return this.usersService.update(parseInt(parmas.id), body);
   }
 
-  @Delete('/:id')
+  @Delete(':id')
   removeUser(@Param() parmas: { id: string }) {
     return this.usersService.remove(parseInt(parmas.id));
   }
